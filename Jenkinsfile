@@ -4,7 +4,7 @@ pipeline {
         stage ('BUILD') {
             steps{
                 echo "this is my first jenkins pipeline.it is not build"
-            }
+            
         }
     }
     post {
