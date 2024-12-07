@@ -1,10 +1,13 @@
 pipeline {
     agent any
+    environment {
+        new_name = "pakodi"
+    }
     stages {
         stage ('BUILD') {
             steps{
-                echo "this is my first jenkins pipeline.it is not build"
-            
+                echo "this is my first jenkins pipeline.it is ${env.new_name}"
+            }
         }
     }
     post {
