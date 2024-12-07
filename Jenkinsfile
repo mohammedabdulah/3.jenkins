@@ -4,7 +4,7 @@ pipeline {
         new_name = "pakodi"
     }
     options {
-        timeout (time:1 , units:'seconds') 
+        timeout (time:1 , unit:'seconds') 
         disableConcurrentBuilds()
     }
     stages {
