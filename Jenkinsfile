@@ -3,6 +3,10 @@ pipeline {
     environment {
         new_name = "pakodi"
     }
+    options {
+        timeout (time:1 , units:'seconds') 
+        disableConcurrentBuilds()
+    }
     stages {
         stage ('BUILD') {
             steps{
