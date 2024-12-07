@@ -12,14 +12,54 @@ pipeline {
         choice(name:'CHOICE', choices:['apply', 'destroy'], description: 'what do you want ? apply or destroy')
     }
     stages {
-        stage ('BUILD') {
+        stage ('init') {
             steps{
-                echo "this is my first jenkins pipeline.it is ${env.new_name}"
+                sh """
+                cd ec2
+                terraform init 
+                """
             }
         }
-        stage ('run') {
+        stage ('plan') {
             steps {
-                echo "choice : ${params.CHOICE}"
+                sh """
+                cd ec2
+                terraform plan
+                """
+            }
+        }
+        stage ('apply') {
+            when {
+                expression {
+                params.CHOICE == 'apply'
+            }
+            }
+            input {
+                message "should we continue?"
+                ok "yes,we should"
+            }
+            steps {
+                sh """
+                cd ec2
+                terraform apply -auto-approve
+                """
+            }
+        }
+        stage ('destroy') {
+            when {
+                expression {
+                params.CHOICE == 'destroy'
+            }
+            }
+            input {
+                message "should we continue?"
+                ok "yes,we should"
+            }
+            steps {
+                sh """
+                cd ec2
+                terraform destroy -auto-approve
+                """
             }
         }
     }
