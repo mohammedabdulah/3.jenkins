@@ -1,25 +1,17 @@
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
+resource "aws_instance" "sample" {
+    ami= data.aws_ami.centos8.id
+    count = 2
+    instance_type= var.instance_name[count.index] == "mongodb" || var.instance_name[count.index] == "payment" || var.instance_name[count.index] == "shipping" ? "t3.small" : "t2.micro"
+    tags = {
+        Name = var.instance_name[count.index]
+    }
 }
 
-resource "aws_instance" "web" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
-
-  tags = {
-    Name = "HelloWorld"
-  }
-}
+# resource "aws_route53_record" "www" {
+#   zone_id = var.zone_id
+#   count = 11
+#   name    = "${var.instance_name[count.index]}.${var.domain_name}"
+#   type    = "A"
+#   ttl     = 1
+#   records = [aws_instance.sample[count.index] == "web" ? aws_instance.sample[count.index].public_ip : aws_instance.sample[count.index].private_ip]
+# }
