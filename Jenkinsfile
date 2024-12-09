@@ -22,7 +22,7 @@ pipeline {
         stage ('plan') {
             steps {
                 sh """
-                
+                cd ec2
                 terraform plan
                 """
             }
