@@ -7,11 +7,3 @@ resource "aws_instance" "sample" {
     }
 }
 
-# resource "aws_route53_record" "www" {
-#   zone_id = var.zone_id
-#   count = 11
-#   name    = "${var.instance_name[count.index]}.${var.domain_name}"
-#   type    = "A"
-#   ttl     = 1
-#   records = [aws_instance.sample[count.index] == "web" ? aws_instance.sample[count.index].public_ip : aws_instance.sample[count.index].private_ip]
-# }

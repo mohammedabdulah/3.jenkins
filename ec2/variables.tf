@@ -8,10 +8,6 @@ variable "instance_name" {
     default = ["web" , "catalogue" ]
 }
 
-variable "domain_name" {
-    type = string
-    default = "littlesimba.online"
-}
 
 variable "zone_id" {
     type = string
